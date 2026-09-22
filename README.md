@@ -44,7 +44,7 @@ cd agents/verification
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn api.server:app --host 0.0.0.0 --port 8091
+uvicorn api.server:app --host 127.0.0.1 --port 8091
 ```
 
 Using uv
@@ -52,7 +52,7 @@ Using uv
 cd agents/verification
 uv venv 
 uv pip install -r requirements.txt
-uv run uvicorn api.server:app --host 0.0.0.0 --port 8091
+uv run uvicorn api.server:app --host 127.0.0.1 --port 8091
 ```
 
 ## 4. Run the Generation Agent on the Included Example
@@ -64,6 +64,14 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r mcp/requirements.txt
 ./tests/run_example.sh
+```
+
+Using uv
+```bash
+cd agents/generation
+uv venv
+uv pip install -r mcp/requirements.txt
+uv run bash ./tests/run_example.sh
 ```
 
 This script:
@@ -83,6 +91,11 @@ You can set the maximum number of iterations:
 MAX_ITERATIONS=10 ./tests/run_example.sh
 ```
 
+or using uv:
+```bash
+MAX_ITERATIONS=10 uv run bash ./tests/run_example.sh
+```
+
 ## 5. Run Your Own Problem
 
 Put your problem in a markdown file under `agents/generation/data/`. Save that as:
@@ -99,10 +112,22 @@ source .venv/bin/activate
 PROBLEM_FILE=data/my_problem.md ./tests/run_example.sh
 ```
 
+or using uv:
+
+```bash
+cd agents/generation
+PROBLEM_FILE=data/my_problem.md uv run bash ./tests/run_example.sh
+```
+
 You can group problems in subdirectories under `data/` and the generated artifacts preserve that structure. For example:
 
 ```bash
 PROBLEM_FILE=data/modrep/modrep.md ./tests/run_example.sh
+```
+
+or using uv:
+```bash
+PROBLEM_FILE=data/modrep/modrep.md uv run bash ./tests/run_example.sh
 ```
 
 To attach user-provided references to a problem (this is optional; use it when you are working on your own research problem and want to provide the agent with unreleased notes), create a sibling reference directory with the same stem:
